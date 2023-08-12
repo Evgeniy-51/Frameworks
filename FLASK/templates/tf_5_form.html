@@ -1,0 +1,12 @@
+{% extends "tf_5_base.html" %}
+
+{% block content %}
+{{ super() }}
+<form class="form-contact" action="/contact" method="post">
+    <p><label>NAME: </label><input type="text" name="username" value="" required> </p>
+    <p><label>E-MAIL: </label><input type="text" name="email" value="" required> </p>
+    <p><label>MESSAGE: </label></p>
+    <p><textarea name="message" rows="7" cols="40"></textarea> </p>
+    <p><input type="submit" value="Send..."></p>
+</form>
+{% endblock %}
