@@ -1,5 +1,5 @@
 {% extends "perm_sess_base.html" %}
-{% block title %}Login Page{% endblock %}
+{% block title %}User{% endblock %}
 
 {% block content %}
 
@@ -11,10 +11,5 @@
         {% endif %}
     {% endwith %}
 
-    <form action="#" method="post">
-        <p>Name: </p>
-        <p><input type="text" name="nm"></p>
-        <p><input type="submit" value="SUBMIT"></p>
-    </form>
-
+    <p>Welcome, {{ user }}</p>
 {% endblock %}
