@@ -10,6 +10,7 @@ def home():
 def login():
     return render_template("perm_sess_login.html")
 
+
 @app.route("/<usr>")
 def user(usr):
     return f"<h>{usr}</h1>"
