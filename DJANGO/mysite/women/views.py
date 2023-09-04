@@ -2,12 +2,19 @@ from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect
 import logging
 
+from .models import *
 logger = logging.getLogger(__name__)
 
-
+menu = ['About Us', 'Add article', 'Contacts', 'Log In']
 def index(request):
     logger.info('Index page accessed')
-    return HttpResponse("WOMEN INDEX")
+    posts = Women.objects.all()
+    # return HttpResponse("WOMEN INDEX")
+    return render(request, 'women/index.html', {'posts': posts, 'menu': menu, 'title': 'Home page'})
+
+def about(request):
+    logger.info('About page accessed')
+    return render(request, 'women/about.html', {'title': 'About'})
 
 
 def categories(request, cat_id):
