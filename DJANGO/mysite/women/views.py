@@ -3,18 +3,41 @@ from django.shortcuts import render, redirect
 import logging
 
 from .models import *
+
 logger = logging.getLogger(__name__)
 
-menu = ['About Us', 'Add article', 'Contacts', 'Log In']
+menu = [{'title': 'About Us', 'url_name': 'about'},
+        {'title': 'Add article', 'url_name': 'add_page'},
+        {'title': 'Contacts', 'url_name': 'contact'},
+        {'title': 'Log In', 'url_name': 'login'},]
+
+
 def index(request):
     logger.info('Index page accessed')
     posts = Women.objects.all()
+    context = {'posts': posts,
+               'menu': menu,
+               'title': 'Home page'}
     # return HttpResponse("WOMEN INDEX")
-    return render(request, 'women/index.html', {'posts': posts, 'menu': menu, 'title': 'Home page'})
+    return render(request, 'women/index.html', context=context)
+
 
 def about(request):
     logger.info('About page accessed')
-    return render(request, 'women/about.html', {'title': 'About'})
+    return render(request, 'women/about.html', {'title': 'About', 'menu': menu})
+
+def addpage(request):
+    return HttpResponse("Add article")
+
+def contact(request):
+    return HttpResponse("Contacts")
+
+def login(request):
+    return HttpResponse("Login")
+
+
+def show_post(request, post_id):
+    return HttpResponse(f"Article #{post_id}")
 
 
 def categories(request, cat_id):
@@ -24,12 +47,14 @@ def categories(request, cat_id):
         print(request.POST)
     return HttpResponse(f"<h1> CATEGORIES {cat_id} </h1>")
 
+
 def archive(request, year):
     if int(year) > 2023:
         # raise Http404()
         # return redirect('/')
         return redirect('home', permanent=True)
     return HttpResponse(f"<h1> ARCHIVE {year} </h1>")
+
 
 def pageNotFound(request, exeption):
     return HttpResponseNotFound(f"<h1> PAGE NOT FOUND! </h1>")

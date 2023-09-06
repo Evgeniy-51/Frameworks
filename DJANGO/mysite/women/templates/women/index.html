@@ -7,8 +7,12 @@
         {% for p in posts %}
             <li>
                 <h2>{{ p.title }}</h2>
-                <p>{{ p.content }}</p>
-                <hr>
+{#                <p>{{ p.content }}</p>#}
+{#                <hr>#}
+            {% autoescape on %}
+            {{ p.content|linebreaks|truncatewords:6 }}
+            {% endautoescape %}
+                <p><a href="{% url 'post' p.pk %}">Read Post</a></p>
             </li>
         {% endfor %}
     </ul>
