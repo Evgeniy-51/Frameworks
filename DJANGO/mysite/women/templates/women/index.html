@@ -1,18 +1,22 @@
 {% extends 'women/base.html' %}
 
 {% block content %}
-    <h1>{{ title }}</h1>
+{#    <h1>{{ title }}</h1>#}
 
-    <ul>
+    <ul class="list-articles">
         {% for p in posts %}
-            <li>
+            <li><div class="article-panel">
+                <p class="first">Category: {{ p.cat }}</p>
+                <p class="last">Date: {{ p.time_update|date:"d-m-Y H:i:s" }}</p>
+                </div>
                 <h2>{{ p.title }}</h2>
 {#                <p>{{ p.content }}</p>#}
-{#                <hr>#}
+                {#                <hr>#}
             {% autoescape on %}
             {{ p.content|linebreaks|truncatewords:6 }}
             {% endautoescape %}
-                <p><a href="{% url 'post' p.pk %}">Read Post</a></p>
+{#                <p><a href="{% url 'post' p.pk %}">Read Post</a></p>#}
+                <p><a href="{{ p.get_absolute_url }}">Read Post</a></p>
             </li>
         {% endfor %}
     </ul>

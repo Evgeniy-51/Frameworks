@@ -15,9 +15,12 @@ menu = [{'title': 'About Us', 'url_name': 'about'},
 def index(request):
     logger.info('Index page accessed')
     posts = Women.objects.all()
+    cats = Category.objects.all()
     context = {'posts': posts,
+               'cats': cats,
                'menu': menu,
-               'title': 'Home page'}
+               'title': 'Home page',
+               'cat_selected': 0,}
     # return HttpResponse("WOMEN INDEX")
     return render(request, 'women/index.html', context=context)
 
@@ -40,12 +43,27 @@ def show_post(request, post_id):
     return HttpResponse(f"Article #{post_id}")
 
 
-def categories(request, cat_id):
-    if request.GET:
-        print(request.GET)
-    if request.POST:
-        print(request.POST)
-    return HttpResponse(f"<h1> CATEGORIES {cat_id} </h1>")
+def show_category(request, cat_id):
+    posts = Women.objects.filter(cat_id=cat_id)
+    cats = Category.objects.all()
+    if len(posts) == 0:
+        raise Http404()
+
+    context = {'posts': posts,
+               'cats': cats,
+               'menu': menu,
+               'title': 'Home page',
+               'cat_selected': cat_id, }
+
+    return render(request, 'women/index.html', context=context)
+
+
+# def categories(request, cat_id):
+#     if request.GET:
+#         print(request.GET)
+#     if request.POST:
+#         print(request.POST)
+#     return HttpResponse(f"<h1> CATEGORIES {cat_id} </h1>")
 
 
 def archive(request, year):
