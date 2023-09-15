@@ -2,6 +2,7 @@ from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect
 import logging
 
+from .forms import AddPostForm
 from .models import *
 
 logger = logging.getLogger(__name__)
@@ -9,7 +10,7 @@ logger = logging.getLogger(__name__)
 menu = [{'title': 'About Us', 'url_name': 'about'},
         {'title': 'Add article', 'url_name': 'add_page'},
         {'title': 'Contacts', 'url_name': 'contact'},
-        {'title': 'Log In', 'url_name': 'login'},]
+        {'title': 'Log In', 'url_name': 'login'}, ]
 
 
 def index(request):
@@ -20,7 +21,7 @@ def index(request):
                'cats': cats,
                'menu': menu,
                'title': 'Home page',
-               'cat_selected': 0,}
+               'cat_selected': 0, }
     # return HttpResponse("WOMEN INDEX")
     return render(request, 'women/index.html', context=context)
 
@@ -29,11 +30,15 @@ def about(request):
     logger.info('About page accessed')
     return render(request, 'women/about.html', {'title': 'About', 'menu': menu})
 
+
 def addpage(request):
-    return HttpResponse("Add article")
+    form = AddPostForm()
+    return render(request, 'women/addpage.html', {'form': form, 'menu': menu, 'title': 'Add article'})
+
 
 def contact(request):
     return HttpResponse("Contacts")
+
 
 def login(request):
     return HttpResponse("Login")
