@@ -2,3 +2,5 @@
 /.idea/
 /.gitignore
 /DJANGO/mysite/logger.log
+/AIOgram/config.py
+
